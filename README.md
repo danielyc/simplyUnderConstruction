@@ -7,6 +7,7 @@
 - **One-Click Activation** - Enable or disable your under construction page instantly
 - **Access Control** - Precisely control who can view your site during maintenance
 - **Customizable Content** - Edit the HTML directly or utilize the WordPress visual editor
+- **Shortcode Support** - Process WordPress shortcodes in your under construction page
 - **LiteSpeed Compatible** - Integrates seamlessly with LiteSpeed Cache
 - **Lightweight** - Minimal impact on your site's performance
 
@@ -29,6 +30,7 @@ Modify your under construction page content using:
 
 - Plain HTML editor for complete control over appearance and functionality
 - WordPress rich text editor for intuitive formatting and design
+- WordPress shortcodes for dynamic content
 - One-click reset option to restore the default under construction page
 
 ---
