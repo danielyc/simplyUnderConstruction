@@ -248,6 +248,10 @@ function uc_settings_page() {
         <p>We are currently making improvements. Please check back soon!</p>\n\
     </body>\n\
 </html>';
+                                // Confirm reset
+                                if (!confirm('Are you sure you want to reset the HTML content to default?')) {
+                                    return;
+                                }
                                 
                                 if (typeof tinyMCE !== 'undefined' && tinyMCE.get('uc_html_content') !== null) {
                                     // If rich editor is active
