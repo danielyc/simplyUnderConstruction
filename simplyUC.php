@@ -216,17 +216,17 @@ function uc_settings_page() {
                         );
                         wp_editor( get_option( 'uc_html_content', '<!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-<title>Under Construction</title>
-<style>
-    body { font-family: Arial, sans-serif; text-align: center; padding-top: 50px; }
-</style>
-</head>
-<body>
-<h1>Site Under Construction</h1>
-<p>We are currently making improvements. Please check back soon!</p>
-</body>
+    <head>
+        <meta charset="UTF-8">
+        <title>Under Construction</title>
+        <style>
+            body { font-family: Arial, sans-serif; text-align: center; padding-top: 50px; }
+        </style>
+    </head>
+    <body>
+        <h1>Site Under Construction</h1>
+        <p>We are currently making improvements. Please check back soon!</p>
+    </body>
 </html>' ), 'uc_html_content', $editor_settings ); 
                         ?>
                         <p class="description">Enter the (HTML) content to display on the under construction page. <button type="button" id="reset-html-content" class="button button-secondary">Reset to Default</button></p>
