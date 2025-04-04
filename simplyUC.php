@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Simply Under Construction
  * Description: The easiest way to display a static "under construction" page for visitors.
- * Version: 1.0
+ * Version: 1.1
  * Author: danielyc
  */
 
@@ -37,6 +37,10 @@ function uc_display_under_construction() {
     if ( ! $bypass ) {
         $html = get_option( 'uc_html_content', '' );
         if ( ! empty( $html ) ) {
+            // Process shortcodes if enabled
+            if ( get_option( 'uc_process_shortcodes', 0 ) ) {
+                $html = do_shortcode( $html );
+            }
             echo $html;
             exit;
         } else {
@@ -54,11 +58,13 @@ function uc_register_settings() {
     register_setting( 'uc_settings_group', 'uc_html_content' );
     register_setting( 'uc_settings_group', 'uc_access_mode' );
     register_setting( 'uc_settings_group', 'uc_rich_editor' );
+    register_setting( 'uc_settings_group', 'uc_process_shortcodes' );
     
     // Add a callback to clear LSCache if it's active
     add_action('update_option_uc_enabled', 'uc_clear_cache', 10, 2);
     add_action('update_option_uc_html_content', 'uc_clear_cache', 10, 2);
     add_action('update_option_uc_access_mode', 'uc_clear_cache', 10, 2);
+    add_action('update_option_uc_process_shortcodes', 'uc_clear_cache', 10, 2);
 }
 add_action( 'admin_init', 'uc_register_settings' );
 
@@ -198,7 +204,18 @@ function uc_settings_page() {
                             <span class="slider round"></span>
                         </label>
                         <span id="uc-rich-editor-status"><?php echo get_option('uc_rich_editor', 0) ? 'Enabled' : 'Disabled'; ?></span>
-                        <p class="description">Check this to use the WordPress rich text editor instead of plain HTML editing.</p>
+                        <p class="description">Enable this to use the WordPress rich text editor instead of plain HTML editing.</p>
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <th scope="row">Process Shortcodes</th>
+                    <td>
+                        <label class="switch">
+                            <input type="checkbox" name="uc_process_shortcodes" value="1" <?php checked( 1, get_option( 'uc_process_shortcodes', 0 ) ); ?> onchange="document.getElementById('uc-shortcodes-status').textContent = this.checked ? 'Enabled' : 'Disabled'" />
+                            <span class="slider round"></span>
+                        </label>
+                        <span id="uc-shortcodes-status"><?php echo get_option('uc_process_shortcodes', 0) ? 'Enabled' : 'Disabled'; ?></span>
+                        <p class="description">Enable this to process WordPress shortcodes in your HTML content.</p>
                     </td>
                 </tr>
                 <tr valign="top">
