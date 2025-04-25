@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Simply Under Construction
  * Description: The easiest way to display a static "under construction" page for visitors.
- * Version: 1.1
+ * Version: 1.2
  * Author: danielyc
  */
 
@@ -29,6 +29,15 @@ function uc_display_under_construction() {
     } elseif ( $access_mode === 'all_users' ) {
         // All logged in users bypass.
         if ( is_user_logged_in() ) {
+            $bypass = true;
+        }
+    }
+    // Add IP whitelist bypass
+    $ip_whitelist = get_option( 'uc_ip_whitelist', '' );
+    if ( ! empty( $ip_whitelist ) ) {
+        $ips       = array_map( 'trim', explode( ',', $ip_whitelist ) );
+        $remote_ip = $_SERVER['REMOTE_ADDR'];
+        if ( in_array( $remote_ip, $ips, true ) ) {
             $bypass = true;
         }
     }
@@ -59,12 +68,14 @@ function uc_register_settings() {
     register_setting( 'uc_settings_group', 'uc_access_mode' );
     register_setting( 'uc_settings_group', 'uc_rich_editor' );
     register_setting( 'uc_settings_group', 'uc_process_shortcodes' );
+    register_setting( 'uc_settings_group', 'uc_ip_whitelist' );
     
     // Add a callback to clear LSCache if it's active
     add_action('update_option_uc_enabled', 'uc_clear_cache', 10, 2);
     add_action('update_option_uc_html_content', 'uc_clear_cache', 10, 2);
     add_action('update_option_uc_access_mode', 'uc_clear_cache', 10, 2);
     add_action('update_option_uc_process_shortcodes', 'uc_clear_cache', 10, 2);
+    add_action('update_option_uc_ip_whitelist', 'uc_clear_cache', 10, 2);
 }
 add_action( 'admin_init', 'uc_register_settings' );
 
@@ -216,6 +227,13 @@ function uc_settings_page() {
                         </label>
                         <span id="uc-shortcodes-status"><?php echo get_option('uc_process_shortcodes', 0) ? 'Enabled' : 'Disabled'; ?></span>
                         <p class="description">Enable this to process WordPress shortcodes in your HTML content.</p>
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <th scope="row">Whitelisted IP Addresses</th>
+                    <td>
+                        <input type="text" name="uc_ip_whitelist" value="<?php echo esc_attr( get_option( 'uc_ip_whitelist', '' ) ); ?>" size="50" />
+                        <p class="description">Comma-separated list of IP addresses to bypass the under construction page.</p>
                     </td>
                 </tr>
                 <tr valign="top">

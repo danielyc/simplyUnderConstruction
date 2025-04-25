@@ -6,6 +6,7 @@
 
 - **One-Click Activation** - Enable or disable your under construction page instantly
 - **Access Control** - Precisely control who can view your site during maintenance
+- **IP Whitelist** - Exclude specific IP addresses from the under construction page
 - **Customizable Content** - Edit the HTML directly or utilize the WordPress visual editor
 - **Shortcode Support** - Process WordPress shortcodes in your under construction page
 - **LiteSpeed Compatible** - Integrates seamlessly with LiteSpeed Cache
@@ -23,6 +24,7 @@
 
 ✅ **Only Administrators** - Exclusively admin users can access the normal website  
 ✅ **All Logged In Users** - Any authenticated user can access the normal website
+✅ **IP Whitelist** - Exclude specific IP addresses from the under construction page
 
 ## Customization
 
